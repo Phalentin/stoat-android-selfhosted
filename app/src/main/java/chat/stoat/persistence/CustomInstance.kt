@@ -102,10 +102,14 @@ suspend fun connectToCustomInstance(kvStorage: KVStorage, domainInput: String) {
     val previousWebsocket = STOAT_WEBSOCKET
 
     try {
-        val wellKnown: StoatWellKnown =
-            StoatHttp.get("https://$domain/.well-known/stoat").body()
-
-        STOAT_BASE = wellKnown.api
+        STOAT_BASE = try {
+            StoatHttp.get("https://$domain/.well-known/stoat")
+                .body<StoatWellKnown>().api
+        } catch (e: Exception) {
+            // No discovery file: treat the input as the API URL itself,
+            // or guess the common layout.
+            if (domain.contains("/")) "https://$domain" else "https://$domain/api"
+        }
 
         val root = getRootRoute()
 
