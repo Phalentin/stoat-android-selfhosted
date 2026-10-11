@@ -17,9 +17,17 @@ jobs:
           java-version: 17
 
       - uses: gradle/actions/setup-gradle@v4
-
+      
+      - name: Create build properties
+        run: cp stoatbuild.properties.example stoatbuild.properties
+        
       - name: Build
         run: ./gradlew assembleDebug --no-daemon
+        env:
+          RVX_DEBUG_APP_NAME: "Stoat Self-Hosted"
+          RVX_BUILD_FLAVOUR_ID: "selfhosted"
+          RVX_APPLINK_HOST: "example.com"
+          RVX_SENTRY_DSN: ""
 
       - uses: actions/upload-artifact@v4
         with:
