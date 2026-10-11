@@ -1,3 +1,6 @@
+> [!CAUTION]
+> THIS FORK IS NOT MAINTAINED!!!!!!
+
 <div align="center">
     <h1>Stoat for Android</h1>
     <p>Official <a href="https://stoat.chat">Stoat</a> Android app.</p>
